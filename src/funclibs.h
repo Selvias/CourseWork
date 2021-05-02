@@ -3,4 +3,5 @@
 #include <string.h>
 #include <stdlib.h>
 
-int merge_sort(int *copy, int left, int right, int size);
+void mergesort(int *source, int low, int high);
+void merge(int *src, int low, int high);

@@ -57,8 +57,16 @@ int main(int argc, char **argv) {
         printf("arr[%d] = %d\n", j, tosort[j]);
     }
 
+    if (strcmp(type, "mergesort") == 0)
+        mergesort(tosort, 0, fsize - 1);
+
+    for (int j = 0; j < fsize; j++) {
+        printf("arr[%d] = %d\n", j, tosort[j]);
+    }
+
     fclose(in);
     fclose(out);
+    free(tosort);
 
     return 0;
 }
