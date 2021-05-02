@@ -53,16 +53,23 @@ int main(int argc, char **argv) {
         i++;
     }
 
-    for (int j = 0; j < fsize; j++) {
-        printf("arr[%d] = %d\n", j, tosort[j]);
-    }
+    // printf("BEFORE SORTING :\n");
+    // for (int j = 0; j < fsize; j++) {
+    //     printf("arr[%d] = %d\n", j, tosort[j]);
+    // }
 
     if (strcmp(type, "mergesort") == 0)
         mergesort(tosort, 0, fsize - 1);
+    else if (strcmp(type, "shellsort") == 0)
+        shellsort(tosort, fsize);
 
-    for (int j = 0; j < fsize; j++) {
-        printf("arr[%d] = %d\n", j, tosort[j]);
-    }
+    // printf("AFTER SORTING :\n");
+    // for (int j = 0; j < fsize; j++) {
+    //     printf("arr[%d] = %d\n", j, tosort[j]);
+    // }
+
+    for (int t = 0; t < fsize; t++)
+        fprintf(out, "%d\n", tosort[t]);
 
     fclose(in);
     fclose(out);
