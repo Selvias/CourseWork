@@ -15,8 +15,6 @@ int main(int argc, char **argv) {
         return -1;
     }
 
-    //Use fseek() to find size of file (count of elsements) (1 pos ~ 4 bytes for integer)
-
     FILE *in;
     FILE *out;
 
@@ -37,8 +35,7 @@ int main(int argc, char **argv) {
     printf("Enter count of elements : ");
     scanf("%d", &n);
 
-    for (int t = 0; t < n; t++)
-        fprintf(in, "%d\n", rand() % 1000);
+    filltxt(in, n);
 
     
     fclose(in);
@@ -55,28 +52,20 @@ int main(int argc, char **argv) {
         return -1;
     }
 
-    fseek(in, 0, SEEK_SET);
     //Заполнение массива числами из входного файла
     int i = 0;
-    while (!feof(in)) {
+    fseek(in, 0, SEEK_SET);
+    while (1) {
+        if (feof(in))
+            break;
         fscanf(in, "%d", &tosort[i]);
         i++;
     }
-
-    // printf("BEFORE SORTING :\n");
-    // for (int j = 0; j < fsize; j++) {
-    //     printf("arr[%d] = %d\n", j, tosort[j]);
-    // }
 
     if (strcmp(type, "mergesort") == 0)
         mergesort(tosort, 0, n - 1);
     else if (strcmp(type, "shellsort") == 0)
         shellsort(tosort, n);
-
-    // printf("AFTER SORTING :\n");
-    // for (int j = 0; j < fsize; j++) {
-    //     printf("arr[%d] = %d\n", j, tosort[j]);
-    // }
 
     for (int t = 0; t < n; t++)
         fprintf(out, "%d\n", tosort[t]);

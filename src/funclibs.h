@@ -7,3 +7,4 @@ void mergesort(int *source, int low, int high);
 void merge(int *src, int low, int high);
 void shellsort(int *src, int size);
 int findsize(FILE *input, FILE *output);
+void filltxt(FILE *input, int n);
