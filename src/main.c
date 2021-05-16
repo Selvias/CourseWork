@@ -20,8 +20,8 @@ int main(int argc, char **argv) {
     FILE *in;
     FILE *out;
 
-    in = fopen(input, "r");
-    out = fopen(output, "w");
+    in = fopen(input, "wb");
+    out = fopen(output, "wb");
 
     if (in == NULL) {
         printf("The input file can't be opened.\n");
@@ -32,13 +32,23 @@ int main(int argc, char **argv) {
         return -1;
     }
 
-    //Нахождения размера файла (Для общего случая, когда тип int занимает 4 байта (txt файл использует кодировку UTF-8, можно использовать другой тип файлов))
-    //ftell возвращает смещение относительно начала файла (в байтах)
-    fseek(in, 0, SEEK_END);
-    int fsize = ftell(in) / 4 - ftell(in) % 4;
+    int n;
+
+    printf("Enter count of elements : ");
+    scanf("%d", &n);
+
+    for (int t = 0; t < n; t++)
+        fprintf(in, "%d\n", rand() % 1000);
+
+    
+    fclose(in);
+    in = fopen(input, "rb");
+
+    int fsize = findsize(in, out);
+    printf("SIZE : %d\n", fsize);
 
     int *tosort = NULL;
-    tosort = (int*)calloc(fsize, sizeof(int));
+    tosort = (int*)calloc(n, sizeof(int));
 
     if (tosort == NULL) {
         printf("Memory allocation failure\n");
@@ -59,16 +69,16 @@ int main(int argc, char **argv) {
     // }
 
     if (strcmp(type, "mergesort") == 0)
-        mergesort(tosort, 0, fsize - 1);
+        mergesort(tosort, 0, n - 1);
     else if (strcmp(type, "shellsort") == 0)
-        shellsort(tosort, fsize);
+        shellsort(tosort, n);
 
     // printf("AFTER SORTING :\n");
     // for (int j = 0; j < fsize; j++) {
     //     printf("arr[%d] = %d\n", j, tosort[j]);
     // }
 
-    for (int t = 0; t < fsize; t++)
+    for (int t = 0; t < n; t++)
         fprintf(out, "%d\n", tosort[t]);
 
     fclose(in);
