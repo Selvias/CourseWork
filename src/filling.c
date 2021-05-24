@@ -51,20 +51,8 @@ void fillarr(int n, const char *filename, int *tofill) {
         exit(-1);
     }
 
-//Заполнение массива числами из входного файла
-    // int i = 0;
-    // while (!feof(in)) {
-    //     if (feof(in))
-    //         break;
-    //     fscanf(in, "%d", (tofill)[i]);
-    //     i++;
-    // }
-
-    // for(int i = 0; i < n; i++) {
-    //     fscanf(in, "%d", &tofill[i]);
-        fread(tofill, sizeof(int), n, in);
-        // printf("%d\n", (tofill)[i]);
-    // }
+    //Заполнение массива числами из входного файла
+    fread(tofill, sizeof(int), n, in);
 
     fclose(in);
 }
