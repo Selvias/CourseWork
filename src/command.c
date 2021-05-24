@@ -12,6 +12,8 @@ int command(const char *input, const char *output, const char *type) {
 
     int fsize = findsize(input);
 
+    printf("Size of file : %d\n", fsize);
+
     int *tosort = NULL;
     tosort = (int*)calloc(fsize, sizeof(int));
     if (tosort == NULL) {

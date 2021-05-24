@@ -2,12 +2,10 @@
 
 void filltxt(int n, const char *filename) {
 
-    FILE *in;
-    in = fopen(filename, "wb");
+    FILE *out;
+    out = fopen(filename, "wb");
 
-    // printf("%s\n", filename);
-
-    if (in == NULL) {
+    if (out == NULL) {
         printf("The input file can't be opened.\n");
         exit(-1);
     }
@@ -19,20 +17,28 @@ void filltxt(int n, const char *filename) {
     printf("Enter type of case (best, worst, middle) : ");
     fscanf(stdin, "%s", tcase);
 
+    int d;
+
     if (strcmp(tcase, "middle") == 0) {
-        for (int t = 0; t < n; t++)
-            fprintf(in, "%d\n", rand() % 1000);
+        for (int t = 0; t < n; t++) {
+            d = rand () % 10000;
+            fwrite(&d, sizeof(int), 1, out);
+        }
     }
     if (strcmp(tcase, "best") == 0) {
-        for (int t = 0; t < n; t++)
-            fprintf(in, "%d\n", t);
+        for (int t = 0; t < n; t++) {
+            d = t;
+            fwrite(&d, sizeof(int), 1, out);
+        }
     }
     if (strcmp(tcase, "worst") == 0) {
-        for (int t = 0; t < n; t++)
-            fprintf(in, "%d\n", n - t);
+        for (int t = 0; t < n; t++) {
+            d = n - t;
+            fwrite(&d, sizeof(int), 1, out);
+        }
     }
 
-    fclose(in);
+    fclose(out);
     free(tcase);
 }
 
@@ -53,9 +59,12 @@ void fillarr(int n, const char *filename, int *tofill) {
     //     fscanf(in, "%d", (tofill)[i]);
     //     i++;
     // }
-    for(int i = 0; i < n; i++) {
-        fscanf(in, "%d", &tofill[i]);
+
+    // for(int i = 0; i < n; i++) {
+    //     fscanf(in, "%d", &tofill[i]);
+        fread(tofill, sizeof(int), n, in);
         // printf("%d\n", (tofill)[i]);
-    }
+    // }
+
     fclose(in);
 }
