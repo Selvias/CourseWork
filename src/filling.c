@@ -1,6 +1,6 @@
 #include "funclibs.h"
 
-void filltxt(int n, const char *filename) {
+int filltxt(int n, const char *filename) {
 
     FILE *out;
     out = fopen(filename, "wb");
@@ -11,6 +11,10 @@ void filltxt(int n, const char *filename) {
     }
 
     char *tcase = (char *)malloc(7*sizeof(char));
+    if (tcase == NULL) {
+        printf("Memory allocation failure.\n");
+        return -1;
+    }
 
     getchar();
 
@@ -25,34 +29,38 @@ void filltxt(int n, const char *filename) {
             fwrite(&d, sizeof(int), 1, out);
         }
     }
-    if (strcmp(tcase, "best") == 0) {
+    else if (strcmp(tcase, "best") == 0) {
         for (int t = 0; t < n; t++) {
             d = t;
             fwrite(&d, sizeof(int), 1, out);
         }
     }
-    if (strcmp(tcase, "worst") == 0) {
+    else if (strcmp(tcase, "worst") == 0) {
         for (int t = 0; t < n; t++) {
             d = n - t;
             fwrite(&d, sizeof(int), 1, out);
         }
     }
+    else 
+        return -1;
 
     fclose(out);
     free(tcase);
+    return 0;
 }
 
-void fillarr(int n, const char *filename, int *tofill) {
+int fillarr(int n, const char *filename, int *tofill) {
     FILE *in;
     in = fopen(filename, "rb");
 
     if (in == NULL) {
         printf("The input file can't be opened.\n");
-        exit(-1);
+        return -1;
     }
 
     //Заполнение массива числами из входного файла
     fread(tofill, sizeof(int), n, in);
 
     fclose(in);
+    return 0;
 }

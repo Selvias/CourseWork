@@ -4,11 +4,15 @@ int command(const char *input, const char *output, const char *type) {
 
     clock_t start, stop;
     double progtime;
+    int flag = 0;
 
     printf("Enter count of elements : ");
     int n = scannum();
 
-    filltxt(n, input);
+    flag = filltxt(n, input);
+    if (flag == -1) {
+        return -1;
+    }
 
     int fsize = findsize(input);
 
@@ -21,7 +25,11 @@ int command(const char *input, const char *output, const char *type) {
         return -1;
     }
 
-    fillarr(fsize, input, tosort);
+    flag = fillarr(fsize, input, tosort);
+    if (flag == -1) {
+        free(tosort);
+        return -1;
+    }
 
     if (strcmp(type, "mergesort") == 0) {
         start = clock();
@@ -38,7 +46,11 @@ int command(const char *input, const char *output, const char *type) {
         printf("Shell Sort Time : %.4f\n", progtime);
     }
 
-    writefile(fsize, output, &tosort);
+    flag = writefile(fsize, output, &tosort);
+    if (flag == -1) {
+        free(tosort);
+        return -1;
+    }
 
     int cflag = checkrez(fsize, tosort);
 
