@@ -1,4 +1,4 @@
-#include "funclibs.h"
+#include "addlib.h"
 
 int scannum() {
     int n;

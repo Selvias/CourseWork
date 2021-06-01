@@ -6,14 +6,6 @@ int command(const char *input, const char *output, const char *type) {
     double progtime;
     int flag = 0;
 
-    printf("Enter count of elements : ");
-    int n = scannum();
-
-    flag = filltxt(n, input);
-    if (flag == -1) {
-        return -1;
-    }
-
     int fsize = findsize(input);
 
     printf("Size of file : %d\n", fsize);
@@ -33,14 +25,14 @@ int command(const char *input, const char *output, const char *type) {
 
     if (strcmp(type, "mergesort") == 0) {
         start = clock();
-        mergesort(tosort, 0, n - 1);
+        mergesort(tosort, 0, fsize - 1);
         stop = clock();
         progtime = (double)(stop - start) / CLOCKS_PER_SEC;
         printf("Merge Sort Time : %.4f\n", progtime);
     }
     else if (strcmp(type, "shellsort") == 0) {
         start = clock();
-        shellsort(tosort, n);
+        shellsort(tosort, fsize);
         stop = clock();
         progtime = (double)(stop - start) / CLOCKS_PER_SEC;
         printf("Shell Sort Time : %.4f\n", progtime);
